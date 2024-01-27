@@ -1,10 +1,13 @@
-let axios = require('axios')
-let fs = require('fs')
-let moment = require('moment')
+let axios = require('axios');
+let fs = require('fs');
+let moment = require('moment');
+let { scheduleDailyTask } = require('./utils');
 
-// 定义你的任务函数
-function myTask() {
-    let authorization = fs.readFileSync('./authorization', 'utf8').toString().trim()
+
+const appName1 = '阿水AI6.0';
+
+function myTask1 () {
+    let authorization = fs.readFileSync('./cookies1', 'utf8').toString().trim();
     axios({
         url: 'https://api.xiabb.chat/chatapi/marketing/signin',
         method: 'post',
@@ -13,39 +16,31 @@ function myTask() {
         },
         data: {}
     }).then(result => {
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), '请求结果', result.data)
+        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName1, '请求结果', result.data);
     }).catch(error => {
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), '请求异常', error)
-    })
-}
-
-const schedule = require('node-schedule');
-
-function calculateNextExecutionTime() {
-    const now = new Date();
-    const randomHour = Math.floor(Math.random() * 24);
-    const randomMinute = Math.floor(Math.random() * 60);
-    const randomSecond = Math.floor(Math.random() * 60);
-
-    return new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() + 1, // 次日
-        randomHour,
-        randomMinute,
-        randomSecond
-    );
-}
-
-// 使用 node-schedule 安排定时任务
-function scheduleDailyTask() {
-    const nextExecutionTime = calculateNextExecutionTime();
-
-    schedule.scheduleJob(nextExecutionTime, () => {
-        myTask();
-        scheduleDailyTask(); // 递归调用，安排下一次任务
+        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName1, '请求异常', error.response.data);
     });
 }
 
-// 启动定时任务
-scheduleDailyTask();
+const appName2 = '520vrvr';
+
+function myTask2 () {
+    let authorization = fs.readFileSync('./cookies2', 'utf8').toString().trim();
+    let formData = new FormData();
+    formData.append('action', 'user_qiandao');
+    // 使用 Axios 发送 POST 请求
+    axios.post('https://520vr.cn/wp-admin/admin-ajax.php', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Cookie': authorization
+        }
+    }).then(result => {
+        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName2, '请求结果', result.data);
+    }).catch(error => {
+        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName2, '请求异常', error.response.data);
+    });
+
+}
+
+scheduleDailyTask(myTask1, appName1);
+scheduleDailyTask(myTask2, appName2);
