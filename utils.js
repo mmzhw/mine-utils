@@ -1,4 +1,5 @@
 const schedule = require('node-schedule');
+let moment = require('moment');
 
 function calculateNextExecutionTime () {
     const now = new Date();
@@ -19,11 +20,11 @@ function calculateNextExecutionTime () {
 // 使用 node-schedule 安排定时任务
 function scheduleDailyTask (myTask, appName) {
     const nextExecutionTime = calculateNextExecutionTime();
-    console.log(appName, '开启定时时间', nextExecutionTime);
+    console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName, '开启任务,触发时间为' ,moment(nextExecutionTime).format('YYY-MM-DD HH:mm:ss') );
 
     schedule.scheduleJob(nextExecutionTime, () => {
         myTask();
-        scheduleDailyTask(); // 递归调用，安排下一次任务
+        scheduleDailyTask(myTask, appName); // 递归调用，安排下一次任务
     });
 }
 

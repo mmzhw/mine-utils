@@ -1,6 +1,6 @@
 let axios = require('axios')
 let fs = require('fs')
-let authorization = fs.readFileSync('./authorization', 'utf8').toString().trim()
+let authorization = fs.readFileSync('./cookies1', 'utf8').toString().trim()
 axios({
     url: 'https://api.xiabb.chat/chatapi/marketing/signin',
     method: 'post',
