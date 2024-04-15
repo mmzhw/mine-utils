@@ -2,7 +2,7 @@ let axios = require('axios')
 let fs = require('fs')
 let authorization = fs.readFileSync('./cookies1', 'utf8').toString().trim()
 axios({
-    url: 'https://api.xiabb.chat/chatapi/marketing/signin',
+    url: 'https://api22.xiabb.chat/chatapi/marketing/signin',
     method: 'post',
     headers: {
         'Authorization': 'Bearer ' + authorization
