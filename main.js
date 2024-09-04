@@ -61,7 +61,7 @@ function myTask2 () {
         console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName2, '请求异常-登录', error.response.data);
     });
 }
-scheduleDailyTask(myTask2, appName2);
+scheduleDailyTask(myTask2, appName2, false);
 
 const appName3 = 'vrfav';
 function myTask3 () {
@@ -108,4 +108,4 @@ function myTask3 () {
 
 
 }
-scheduleDailyTask(myTask3, appName3);
+scheduleDailyTask(myTask3, appName3, false);
