@@ -39,8 +39,8 @@ function scheduleDailyTask(myTask, appName, isNextDay) {
     const nextExecutionTime = calculateNextExecutionTime(isNextDay);
     console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '开启任务,触发时间为', moment(nextExecutionTime).format('YYYY-MM-DD HH:mm:ss'));
 
-    schedule.scheduleJob(nextExecutionTime, () => {
-        myTask();
+    schedule.scheduleJob(nextExecutionTime, async () => {
+        await myTask();
         scheduleDailyTask(myTask, appName, true); // 递归调用，安排下一次任务
     });
 }
