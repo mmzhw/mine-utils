@@ -17,9 +17,9 @@ async function myTask1() {
             },
             data: {},
         });
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName1, '请求结果', result.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName1, '请求结果', result.data);
     } catch (e) {
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName1, '请求异常', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName1, '请求异常', e.response.data);
     }
 }
 

@@ -37,7 +37,7 @@ function calculateNextExecutionTime(isNextDay) {
 // 使用 node-schedule 安排定时任务
 function scheduleDailyTask(myTask, appName, isNextDay) {
     const nextExecutionTime = calculateNextExecutionTime(isNextDay);
-    console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName, '开启任务,触发时间为', moment(nextExecutionTime).format('YYY-MM-DD HH:mm:ss'));
+    console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '开启任务,触发时间为', moment(nextExecutionTime).format('YYYY-MM-DD HH:mm:ss'));
 
     schedule.scheduleJob(nextExecutionTime, () => {
         myTask();
@@ -47,5 +47,6 @@ function scheduleDailyTask(myTask, appName, isNextDay) {
 
 // 导出 greet 函数
 module.exports = {
+    calculateNextExecutionTime: calculateNextExecutionTime,
     scheduleDailyTask: scheduleDailyTask,
 };

@@ -22,7 +22,7 @@ async function myTask3() {
         });
         await myTask3_extra(result);
     } catch (e) {
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName3, '请求异常-登录', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName3, '请求异常-登录', e.response.data);
     }
 }
 
@@ -48,9 +48,9 @@ async function myTask3_extra(data) {
                 'cookie': reqCookies,
             },
         });
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName3, '请求结果-签到', result.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName3, '请求结果-签到', result.data);
     } catch (e) {
-        console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName3, '请求异常-签到', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName3, '请求异常-签到', e.response.data);
     }
 }
 
