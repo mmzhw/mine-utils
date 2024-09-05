@@ -1,7 +1,7 @@
 const schedule = require('node-schedule');
 let moment = require('moment');
 
-function calculateNextExecutionTime (isNextDay) {
+function calculateNextExecutionTime(isNextDay) {
     const now = new Date();
     // 获取当前的小时、分钟、秒
     let currentHours = now.getHours();
@@ -30,14 +30,14 @@ function calculateNextExecutionTime (isNextDay) {
         now.getDate() + (isNextDay ? 1 : 0), // 次日
         futureHours,
         futureMinutes,
-        futureSeconds
+        futureSeconds,
     );
 }
 
 // 使用 node-schedule 安排定时任务
-function scheduleDailyTask (myTask, appName, isNextDay) {
+function scheduleDailyTask(myTask, appName, isNextDay) {
     const nextExecutionTime = calculateNextExecutionTime(isNextDay);
-    console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName, '开启任务,触发时间为' ,moment(nextExecutionTime).format('YYY-MM-DD HH:mm:ss') );
+    console.log(moment().format('YYY-MM-DD HH:mm:ss'), appName, '开启任务,触发时间为', moment(nextExecutionTime).format('YYY-MM-DD HH:mm:ss'));
 
     schedule.scheduleJob(nextExecutionTime, () => {
         myTask();
@@ -47,5 +47,5 @@ function scheduleDailyTask (myTask, appName, isNextDay) {
 
 // 导出 greet 函数
 module.exports = {
-    scheduleDailyTask: scheduleDailyTask
+    scheduleDailyTask: scheduleDailyTask,
 };
