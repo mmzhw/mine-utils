@@ -3,25 +3,31 @@ let moment = require('moment');
 
 function calculateNextExecutionTime(isNextDay) {
     const now = new Date();
-    // 获取当前的小时、分钟、秒
-    let currentHours = now.getHours();
-    let currentMinutes = now.getMinutes();
-    let currentSeconds = now.getSeconds();
-    // 随机生成比当前时间晚的小时、分钟、秒
-    let futureHours = currentHours + Math.floor(Math.random() * (24 - currentHours));
-    let futureMinutes = currentMinutes + Math.floor(Math.random() * (60 - currentMinutes));
-    let futureSeconds = currentSeconds + Math.floor(Math.random() * (60 - currentSeconds));
-    // 校正时间
-    if (futureSeconds >= 60) {
-        futureSeconds -= 60;
-        futureMinutes += 1;
-    }
-    if (futureMinutes >= 60) {
-        futureMinutes -= 60;
-        futureHours += 1;
-    }
-    if (futureHours >= 24) {
-        futureHours -= 24; // 下一天的时间
+
+    let futureHours = Math.floor(Math.random() * 24);
+    let futureMinutes = Math.floor(Math.random() * 60);
+    let futureSeconds = Math.floor(Math.random() * 60);
+    if (!isNextDay) {
+        // 获取当前的小时、分钟、秒
+        let currentHours = now.getHours();
+        let currentMinutes = now.getMinutes();
+        let currentSeconds = now.getSeconds();
+        // 随机生成比当前时间晚的小时、分钟、秒
+        futureHours = currentHours + Math.floor(Math.random() * (24 - currentHours));
+        futureMinutes = currentMinutes + Math.floor(Math.random() * (60 - currentMinutes));
+        futureSeconds = currentSeconds + Math.floor(Math.random() * (60 - currentSeconds));
+        // 校正时间
+        if (futureSeconds >= 60) {
+            futureSeconds -= 60;
+            futureMinutes += 1;
+        }
+        if (futureMinutes >= 60) {
+            futureMinutes -= 60;
+            futureHours += 1;
+        }
+        if (futureHours >= 24) {
+            futureHours -= 24; // 下一天的时间
+        }
     }
 
     return new Date(
