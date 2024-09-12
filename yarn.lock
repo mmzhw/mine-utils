@@ -141,6 +141,13 @@ hasown@^2.0.0:
   dependencies:
     function-bind "^1.1.2"
 
+iconv-lite@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.npmmirror.com/iconv-lite/-/iconv-lite-0.6.3.tgz"
+  integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3.0.0"
+
 long-timeout@0.1.1:
   version "0.1.1"
   resolved "https://registry.npmmirror.com/long-timeout/-/long-timeout-0.1.1.tgz"
@@ -193,6 +200,11 @@ qs@^6.13.0:
   integrity sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==
   dependencies:
     side-channel "^1.0.6"
+
+"safer-buffer@>= 2.1.2 < 3.0.0":
+  version "2.1.2"
+  resolved "https://registry.npmmirror.com/safer-buffer/-/safer-buffer-2.1.2.tgz"
+  integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 set-function-length@^1.2.1:
   version "1.2.2"

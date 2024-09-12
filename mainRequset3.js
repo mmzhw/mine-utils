@@ -58,7 +58,8 @@ async function scheduleDailyTask3() {
     scheduleDailyTask(myTask3, appName3, false);
 }
 
-module.exports = {
-    myTask3: myTask3,
-    scheduleDailyTask3: scheduleDailyTask3,
-};
+// module.exports = {
+//     myTask3: myTask3,
+//     scheduleDailyTask3: scheduleDailyTask3,
+// };
+scheduleDailyTask3()
