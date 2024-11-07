@@ -1,5 +1,6 @@
 const { exec } = require('child_process');
 const iconv = require('iconv-lite');
+const schedule = require("node-schedule");
 
 // process.env.LANG ='zh_CN.GBK';
 process.stdout.setEncoding('utf8');
@@ -10,7 +11,7 @@ let commands = [];
 if (process.platform === 'win32') {
     commands = [
         'taskkill /IM PgyVisitorEnt.exe /F',  // 关闭 PgyVisitorEnt.exe
-        // 'taskkill /IM WeChat.exe /F'  // 关闭 WeChat.exe
+        'taskkill /IM WeChat.exe /F'  // 关闭 WeChat.exe
     ];
 } else if (process.platform === 'darwin') {
     commands = [
@@ -24,20 +25,26 @@ if (process.platform === 'win32') {
     ];
 }
 
-// 执行关闭命令
-commands.forEach((command) => {
-    exec(command, { encoding: 'buffer' }, (err, stdout, stderr) => {
-        if (err) {
-            // console.error(`执行关闭命令时出错: ${iconv.decode(err.message, 'gbk')}`);
-            console.error(`执行关闭命令时出错: ${err.message}`);
-            return;
-        }
-        if (stderr) {
-            // console.error(`关闭进程时遇到错误: ${iconv.decode(stderr, 'cp936')}`);
-            console.error(`关闭进程时遇到错误: ${stderr}`);
-            return;
-        }
-        // console.log(`进程已成功关闭: ${iconv.decode(stdout, 'cp936')}`);
-        console.log(`进程已成功关闭: ${stdout}`);
+
+function myTask(){
+    // 执行关闭命令
+    commands.forEach((command) => {
+        exec(command, { encoding: 'buffer' }, (err, stdout, stderr) => {
+            if (err) {
+                // console.error(`执行关闭命令时出错: ${iconv.decode(err.message, 'gbk')}`);
+                console.error(`执行关闭命令时出错: ${err.message}`);
+                return;
+            }
+            if (stderr) {
+                // console.error(`关闭进程时遇到错误: ${iconv.decode(stderr, 'cp936')}`);
+                console.error(`关闭进程时遇到错误: ${stderr}`);
+                return;
+            }
+            // console.log(`进程已成功关闭: ${iconv.decode(stdout, 'cp936')}`);
+            console.log(`进程已成功关闭: ${stdout}`);
+        });
     });
-});
+}
+
+
+schedule.scheduleJob('0 22 * * *', myTask)
