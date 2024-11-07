@@ -24,28 +24,29 @@ function mergeVideos(folderPath, outputFileName) {
     const fileListPath = path.join(folderPath, 'filelist.txt');
     fs.writeFileSync(fileListPath, files.join('\n')); // 将文件列表写入一个文本文件
 
-    const ffmpegCommand = `ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v h264_nvenc -c copy "${outputFilePath}"`;
+    const ffmpegCommand = `ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v hevc_nvenc -c copy "${outputFilePath}"`; //h.265
+    // const ffmpegCommand = `ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v h264_nvenc -c copy "${outputFilePath}"`; //h.264
 
     try {
         execSync(ffmpegCommand, { stdio: 'inherit' }); // 同步执行 FFmpeg 命令
         console.log(`Merged videos in ${folderPath} into ${outputFilePath}`);
     } catch (error) {
         console.error(`Error merging videos in ${folderPath}:`, error);
-        return;
+        // return;
     } finally {
         fs.unlinkSync(fileListPath); // 删除临时的文件列表
     }
 
-    // 删除原始视频文件
-    for (const file of files) {
-        const filePath = file.match(/file '(.*)'/)[1]; // 提取实际文件路径
-        try {
-            fs.unlinkSync(filePath); // 同步删除文件
-            console.log(`Deleted original file: ${filePath}`);
-        } catch (err) {
-            console.error(`Failed to delete ${filePath}:`, err);
-        }
-    }
+    // // 删除原始视频文件
+    // for (const file of files) {
+    //     const filePath = file.match(/file '(.*)'/)[1]; // 提取实际文件路径
+    //     try {
+    //         fs.unlinkSync(filePath); // 同步删除文件
+    //         console.log(`Deleted original file: ${filePath}`);
+    //     } catch (err) {
+    //         console.error(`Failed to delete ${filePath}:`, err);
+    //     }
+    // }
 }
 
 
