@@ -100,5 +100,45 @@ function processCurrentFolder() {
     console.log('操作完成！');
 }
 
+/**
+ * 遍历当前目录，修改文件夹名称为大写
+ * @param {string} dirPath - 当前目录路径
+ */
+function renameFoldersToUpper(dirPath) {
+    try {
+        // 获取当前目录下的所有文件和文件夹
+        const items = fs.readdirSync(dirPath);
+
+        for (const item of items) {
+            const itemPath = path.join(dirPath, item);
+            const stats = fs.statSync(itemPath);
+
+            // 检查是否为文件夹
+            if (stats.isDirectory()) {
+                const newName = item.toUpperCase();
+
+                // 如果文件夹名称已经是大写，跳过
+                if (newName !== item) {
+                    const newPath = path.join(dirPath, newName);
+
+                    // 修改文件夹名称
+                    fs.renameSync(itemPath, newPath);
+                    console.log(`Renamed folder: ${item} -> ${newName}`);
+
+                    // 递归处理子文件夹
+                    renameFoldersToUpper(newPath);
+                } else {
+                    // 递归处理子文件夹
+                    renameFoldersToUpper(itemPath);
+                }
+            }
+        }
+    } catch (err) {
+        console.error('Error:', err.message);
+    }
+}
+
+
 // 执行
+renameFoldersToUpper('.');
 processCurrentFolder();
