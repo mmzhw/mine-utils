@@ -1,69 +1,97 @@
 const fs = require('fs');
 const path = require('path');
-const {execSync} = require('child_process');
+const { execSync } = require('child_process');
 
-// 检查视频文件格式的正则表达式，可以根据需要添加其他格式
-const videoExtensions = ['.mp4', '.avi', '.mov', '.mkv'];
+// 获取当前时间
+const getCurrentTimeWithLocale = () => {
+    return new Date().toLocaleString('zh-CN', {
+        hour12: false,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    }).replace(/\//g, '-');
+};
 
-// 合并视频文件
-// 合并视频文件
-function mergeVideos(folderPath, outputFileName) {
-    const files = fs.readdirSync(folderPath)
-        .filter(file => videoExtensions.includes(path.extname(file).toLowerCase()))
-        .map(file => `file '${path.join(folderPath, file).replace(/'/g, "'\\''")}'`); // 添加路径并转义引号
+/**
+ * 检查是否是视频文件
+ * @param {string} fileName 文件名
+ * @returns {boolean}
+ */
+function isVideoFile(fileName) {
+    const videoExtensions = ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.wmv'];
+    return videoExtensions.includes(path.extname(fileName).toLowerCase());
+}
 
-    if (files.length === 0) {
-        console.log(`No video files found in ${folderPath}`);
-        return;
-    }
+/**
+ * 获取文件夹中的所有文件和文件夹
+ * @param {string} dirPath 目录路径
+ * @returns {Array}
+ */
+function getFilesAndDirs(dirPath) {
+    return fs.readdirSync(dirPath).map(file => path.join(dirPath, file));
+}
 
-    // 提取第一个视频文件的路径，并使用它来获取扩展名
-    const firstFilePath = files[0].match(/file '(.*)'/)[1];
-    const outputFilePath = path.join(folderPath, `${outputFileName}${path.extname(firstFilePath)}`);
+/**
+ * 检查文件夹内是否只有视频文件
+ * @param {string} dirPath 目录路径
+ * @returns {boolean}
+ */
+function isAllVideos(dirPath) {
+    const files = getFilesAndDirs(dirPath);
+    return files.every(file => fs.statSync(file).isFile() && isVideoFile(file));
+}
 
-    const fileListPath = path.join(folderPath, 'filelist.txt');
-    fs.writeFileSync(fileListPath, files.join('\n')); // 将文件列表写入一个文本文件
+/**
+ * 合并视频文件，并保存在原文件夹内
+ * @param {string} dirPath 包含视频文件的文件夹路径
+ */
+function mergeVideos(dirPath) {
+    const files = getFilesAndDirs(dirPath).filter(file => isVideoFile(file));
+    if (files.length === 0) return;
 
-    const ffmpegCommand = `ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v hevc_nvenc -c copy "${outputFilePath}"`; //h.265
-    // const ffmpegCommand = `ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v h264_nvenc -c copy "${outputFilePath}"`; //h.264
+    // 创建临时文件列表
+    const fileListPath = path.join(dirPath, 'filelist.txt');
+    const fileListContent = files.map(file => `file '${file}'`).join('\n');
+    fs.writeFileSync(fileListPath, fileListContent);
+
+    // 输出文件路径，以当前文件夹名称命名
+    const folderName = path.basename(dirPath);
+    const outputVideoPath = path.join(dirPath, `${folderName}.mp4`);
 
     try {
-        execSync(ffmpegCommand, { stdio: 'inherit' }); // 同步执行 FFmpeg 命令
-        console.log(`Merged videos in ${folderPath} into ${outputFilePath}`);
+        console.log(getCurrentTimeWithLocale()`：开始合并`);
+        // 使用 FFmpeg 合并视频
+        execSync(`ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v hevc_nvenc -c copy "${outputVideoPath}"`, { stdio: 'inherit' }); //h.265
+        // execSync(`ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v h264_nvenc -c copy "${outputVideoPath}"`, { stdio: 'inherit' }); //h.264
+        console.log(getCurrentTimeWithLocale()`：合并完成: ${outputVideoPath}`);
+
+        // 删除原视频文件和临时文件
+        files.forEach(file => fs.unlinkSync(file));
+        fs.unlinkSync(fileListPath);
     } catch (error) {
-        console.error(`Error merging videos in ${folderPath}:`, error);
-        // return;
-    } finally {
-        fs.unlinkSync(fileListPath); // 删除临时的文件列表
+        console.error(`合并失败: ${error.message}`);
     }
-
-    // // 删除原始视频文件
-    // for (const file of files) {
-    //     const filePath = file.match(/file '(.*)'/)[1]; // 提取实际文件路径
-    //     try {
-    //         fs.unlinkSync(filePath); // 同步删除文件
-    //         console.log(`Deleted original file: ${filePath}`);
-    //     } catch (err) {
-    //         console.error(`Failed to delete ${filePath}:`, err);
-    //     }
-    // }
 }
 
+/**
+ * 递归遍历文件夹
+ * @param {string} dirPath 目录路径
+ */
+function traverseFolders(dirPath) {
+    const items = getFilesAndDirs(dirPath);
+    const directories = items.filter(item => fs.statSync(item).isDirectory());
 
-// 遍历当前目录并处理每个文件夹
-function processFolders() {
-    const currentDir = __dirname;
-
-    const folders = fs.readdirSync(currentDir).filter(file =>
-        fs.statSync(path.join(currentDir, file)).isDirectory()
-    );
-
-    for (const folder of folders) {
-        const folderPath = path.join(currentDir, folder);
-        mergeVideos(folderPath, folder); // 使用文件夹名称作为输出文件名
+    if (directories.length === 0 && isAllVideos(dirPath)) {
+        // 当前文件夹全是视频文件
+        mergeVideos(dirPath);
+    } else {
+        directories.forEach(subDir => traverseFolders(subDir));
     }
-
-    console.log('All folders processed.');
 }
 
-processFolders();
+// 入口函数
+const currentDir = process.cwd();
+traverseFolders(currentDir);
