@@ -9,7 +9,8 @@ const { execSync } = require('child_process');
  */
 function getVideoResolution(filePath) {
     try {
-        const cmd = `ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "${filePath}"`;
+        const cmd = `./ffmpeg-7.0.2/ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "${filePath}"`;
+        // const cmd = `ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "${filePath}"`;
         const output = execSync(cmd, { encoding: 'utf-8' }).trim();
         return output || null;
     } catch (error) {
@@ -61,6 +62,7 @@ function traverseDirectory(dir) {
 // 示例用法
 // const targetDirectory = process.cwd();
 // const targetDirectory = 'D:/code/req-test/video';
-const targetDirectory = 'D:/Merge';
+// const targetDirectory = 'D:/Merge';
+const targetDirectory = '/share/CACHEDEV3_DATA/AV/VR-AV/';
 traverseDirectory(targetDirectory);
 console.log('处理完成');
