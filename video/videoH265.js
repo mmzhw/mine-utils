@@ -5,27 +5,19 @@ const { execSync } = require('child_process');
 // 视频文件扩展名
 const videoExtensions = ['.mp4', '.mov', '.avi', '.mkv', '.flv'];
 
-// 获取原视频的比特率
-function getOriginalBitrate(filePath) {
-    try {
-        const output = execSync(`ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -of default=noprint_wrappers=1:nokey=1 "${filePath}"`);
-        return parseInt(output.toString().trim(), 10);
-    } catch (error) {
-        console.error(`无法获取比特率: ${filePath}`, error);
-        return null;
-    }
-}
-
 // 遍历目录并处理文件
 function processDirectory(directory) {
     const files = fs.readdirSync(directory);
+
     for (const file of files) {
         const filePath = path.join(directory, file);
         const stat = fs.statSync(filePath);
 
         if (stat.isDirectory()) {
+            // 如果是目录，则递归处理
             processDirectory(filePath);
         } else if (stat.isFile() && isVideoFile(filePath)) {
+            // 如果是视频文件，则进行转换
             convertToH265(filePath);
         }
     }
@@ -44,22 +36,11 @@ function convertToH265(filePath) {
     const fileName = path.basename(filePath, ext);
     const tempFilePath = path.join(dir, `${fileName}_temp.mp4`);
 
-    // 获取原视频的比特率
-    const originalBitrate = getOriginalBitrate(filePath);
-    if (!originalBitrate) {
-        console.error(`跳过文件: 无法获取比特率 ${filePath}`);
-        return;
-    }
-
-    // 动态调整最大比特率，设为原比特率的80%
-    const maxRate = Math.max(Math.floor(originalBitrate * 0.8 / 1000), 1000); // kbps
-    const bufSize = Math.max(maxRate * 2, 2000); // 缓冲区大小
-
     try {
-        console.log(`正在转换: ${filePath}，原始比特率: ${originalBitrate} bps`);
+        console.log(`正在转换: ${filePath}`);
 
-        // 调用 FFmpeg，使用 NVENC 进行 H.265 转换
-        const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -cq 28 -maxrate ${maxRate}k -bufsize ${bufSize}k -preset p5 -c:a copy -map 0 "${tempFilePath}"`;
+        // 调用 FFmpeg，使用独立显卡 (NVENC) 进行 H.265 编码
+        const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -preset medium -b:v 0 -c:a copy "${tempFilePath}"`;
         execSync(ffmpegCommand, { stdio: 'inherit' });
 
         // 替换原文件
@@ -69,6 +50,7 @@ function convertToH265(filePath) {
         console.log(`转换完成: ${filePath}`);
     } catch (error) {
         console.error(`转换失败: ${filePath}`, error);
+        // 清理临时文件
         if (fs.existsSync(tempFilePath)) {
             fs.unlinkSync(tempFilePath);
         }
@@ -76,6 +58,6 @@ function convertToH265(filePath) {
 }
 
 // 执行脚本
-const targetDirectory = process.cwd();
+const targetDirectory = process.argv[2] || '.';
 processDirectory(targetDirectory);
 console.log('处理完成');
