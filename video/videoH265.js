@@ -55,7 +55,7 @@ function convertToH265(filePath) {
         console.log(`正在转换: ${filePath}，原始比特率: ${originalBitrate} bps`);
 
         // 调用 FFmpeg，使用 NVENC 进行 H.265 转换，保持原有比特率
-        const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -b:v ${Math.floor(originalBitrate / 1000)}k -maxrate ${Math.floor(originalBitrate / 1000)}k -bufsize ${Math.floor(originalBitrate / 500)}k -preset p5 -c:a copy -c:s copy -map 0 "${tempFilePath}"`;
+        const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -b:v ${Math.floor(originalBitrate / 1024)}k -maxrate ${Math.floor(originalBitrate / 1024)}k -bufsize ${Math.floor(originalBitrate / 512)}k -preset p5 -c:a copy -c:s copy -map 0 "${tempFilePath}"`;
         execSync(ffmpegCommand, { stdio: 'inherit' });
 
         // 替换原文件
