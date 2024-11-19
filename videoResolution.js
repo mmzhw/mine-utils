@@ -59,6 +59,8 @@ function traverseDirectory(dir) {
 }
 
 // 示例用法
-const targetDirectory = process.cwd();
+// const targetDirectory = process.cwd();
+// const targetDirectory = 'D:/code/req-test/video';
+const targetDirectory = 'D:/Merge';
 traverseDirectory(targetDirectory);
 console.log('处理完成');

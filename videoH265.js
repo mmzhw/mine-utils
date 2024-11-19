@@ -72,6 +72,8 @@ function convertToH265(filePath) {
 }
 
 // 执行脚本
-const targetDirectory = process.argv[2] || '.';
+// const targetDirectory = process.cwd();
+// const targetDirectory = 'D:/code/req-test/video';
+const targetDirectory = 'D:/Merge';
 processDirectory(targetDirectory);
 console.log('处理完成');

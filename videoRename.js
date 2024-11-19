@@ -176,7 +176,9 @@ function traverseAndRename(dirPath) {
 }
 
 
-const targetDirectory = process.cwd();
+// const targetDirectory = process.cwd();
+// const targetDirectory = 'D:/code/req-test/video';
+const targetDirectory = 'D:/Merge';
 convertFolderNamesToUppercase(targetDirectory);//目录小写改大写
 traverseFolder(targetDirectory);//重命名
 traverseAndRename(targetDirectory);//文件小写改大写

@@ -93,5 +93,7 @@ function traverseFolders(dirPath) {
 }
 
 // 入口函数
-const targetDirectory = process.cwd();
+// const targetDirectory = process.cwd();
+// const targetDirectory = 'D:/code/req-test/video';
+const targetDirectory = 'D:/Merge';
 traverseFolders(targetDirectory);
