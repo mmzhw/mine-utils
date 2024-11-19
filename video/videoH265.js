@@ -40,7 +40,7 @@ function convertToH265(filePath) {
         console.log(`正在转换: ${filePath}`);
 
         // 调用 FFmpeg，使用独立显卡 (NVENC) 进行 H.265 编码
-        const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -preset medium -b:v 0 -c:a copy "${tempFilePath}"`;
+        const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -preset slow -b:v 0 -c:a copy "${tempFilePath}"`;
         execSync(ffmpegCommand, { stdio: 'inherit' });
 
         // 替换原文件
