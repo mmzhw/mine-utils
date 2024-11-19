@@ -64,8 +64,7 @@ function mergeVideos(dirPath) {
     try {
         console.log(getCurrentTimeWithLocale(), `：开始合并`);
         // 使用 FFmpeg 合并视频
-        execSync(`ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v hevc_nvenc -c copy "${outputVideoPath}"`, {stdio: 'inherit'}); //h.265
-        // execSync(`ffmpeg -f concat -safe 0 -i "${fileListPath}" -c:v h264_nvenc -c copy "${outputVideoPath}"`, { stdio: 'inherit' }); //h.264
+        execSync(`ffmpeg -f concat -safe 0 -i "${fileListPath}" -c copy "${outputVideoPath}"`, {stdio: 'inherit'});
         console.log(getCurrentTimeWithLocale(), `：合并完成: ${outputVideoPath}`);
 
         // 删除原视频文件和临时文件
