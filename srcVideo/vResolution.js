@@ -35,7 +35,7 @@ function renameFile(oldPath, newPath) {
  * 递归遍历目录，查找视频文件并重命名
  * @param {string} dir - 目标目录
  */
-function traverseDirectory(dir) {
+function videoResolutionName(dir) {
     const files = fs.readdirSync(dir);
     for (const file of files) {
         const filePath = path.join(dir, file);
@@ -43,7 +43,7 @@ function traverseDirectory(dir) {
 
         if (stat.isDirectory()) {
             // 如果是目录，则递归调用
-            traverseDirectory(filePath);
+            videoResolutionName(filePath);
         } else if (stat.isFile()) {
             const ext = path.extname(file).toLowerCase();
             // 判断是否是视频文件（可以根据需要扩展文件类型）
@@ -59,10 +59,4 @@ function traverseDirectory(dir) {
     }
 }
 
-// 示例用法
-// const targetDirectory = process.cwd();
-// const targetDirectory = 'D:/code/req-test/video';
-// const targetDirectory = 'D:/Merge';
-const targetDirectory = '/share/CACHEDEV3_DATA/AV/VR-AV/';
-traverseDirectory(targetDirectory);
-console.log('处理完成');
+module.exports = videoResolutionName

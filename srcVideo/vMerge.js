@@ -79,7 +79,7 @@ function mergeVideos(dirPath) {
  * 递归遍历文件夹
  * @param {string} dirPath 目录路径
  */
-function traverseFolders(dirPath) {
+function videoMerge(dirPath) {
     const items = getFilesAndDirs(dirPath);
     const directories = items.filter(item => fs.statSync(item).isDirectory());
 
@@ -88,12 +88,8 @@ function traverseFolders(dirPath) {
         mergeVideos(dirPath);
         console.log(dirPath)
     } else {
-        directories.forEach(subDir => traverseFolders(subDir));
+        directories.forEach(subDir => videoMerge(subDir));
     }
 }
 
-// 入口函数
-// const targetDirectory = process.cwd();
-// const targetDirectory = 'D:/code/req-test/video';
-const targetDirectory = 'D:/Merge';
-traverseFolders(targetDirectory);
+module.exports = videoMerge

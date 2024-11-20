@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const {execSync} = require('child_process');
 
 // 视频文件扩展名
 const videoExtensions = ['.mp4', '.mov', '.avi', '.mkv', '.flv'];
@@ -17,14 +17,14 @@ function getOriginalBitrate(filePath) {
 }
 
 // 遍历目录并处理文件
-function processDirectory(directory) {
+function videoTranscodingH265(directory) {
     const files = fs.readdirSync(directory);
     for (const file of files) {
         const filePath = path.join(directory, file);
         const stat = fs.statSync(filePath);
 
         if (stat.isDirectory()) {
-            processDirectory(filePath);
+            videoTranscodingH265(filePath);
         } else if (stat.isFile() && isVideoFile(filePath)) {
             convertToH265(filePath);
         }
@@ -56,7 +56,7 @@ function convertToH265(filePath) {
 
         // 调用 FFmpeg，使用 NVENC 进行 H.265 转换，保持原有比特率
         const ffmpegCommand = `ffmpeg -y -i "${filePath}" -c:v hevc_nvenc -b:v ${Math.floor(originalBitrate / 1024)}k -maxrate ${Math.floor(originalBitrate / 1024)}k -bufsize ${Math.floor(originalBitrate / 512)}k -preset p5 -c:a copy -c:s copy -map 0 "${tempFilePath}"`;
-        execSync(ffmpegCommand, { stdio: 'inherit' });
+        execSync(ffmpegCommand, {stdio: 'inherit'});
 
         // 替换原文件
         fs.unlinkSync(filePath);
@@ -71,9 +71,4 @@ function convertToH265(filePath) {
     }
 }
 
-// 执行脚本
-// const targetDirectory = process.cwd();
-// const targetDirectory = 'D:/code/req-test/video';
-const targetDirectory = 'D:/Merge';
-processDirectory(targetDirectory);
-console.log('处理完成');
+module.exports = videoTranscodingH265

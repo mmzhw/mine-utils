@@ -86,7 +86,7 @@ function renameVideoFiles(folderPath) {
  * 递归遍历文件夹
  * @param {string} folderPath
  */
-function traverseFolder(folderPath) {
+function videoRenameFolder(folderPath) {
     const entries = fs.readdirSync(folderPath);
 
     entries.forEach(entry => {
@@ -95,7 +95,7 @@ function traverseFolder(folderPath) {
 
         if (stats.isDirectory()) {
             // 递归处理子文件夹
-            traverseFolder(entryPath);
+            videoRenameFolder(entryPath);
             deleteNonVideoFiles(entryPath);
             renameVideoFiles(entryPath);
         }
@@ -110,7 +110,7 @@ function traverseFolder(folderPath) {
  * 遍历多层级目录，将所有文件夹名称转换为大写
  * @param {string} dirPath - 需要处理的根目录路径
  */
-function convertFolderNamesToUppercase(dirPath) {
+function folderNamesToUppercase(dirPath) {
     try {
         // 读取当前目录的内容
         const items = fs.readdirSync(dirPath);
@@ -132,7 +132,7 @@ function convertFolderNamesToUppercase(dirPath) {
                 }
 
                 // 递归处理子目录
-                convertFolderNamesToUppercase(newPath);
+                folderNamesToUppercase(newPath);
             }
         }
     } catch (err) {
@@ -144,7 +144,7 @@ function convertFolderNamesToUppercase(dirPath) {
  * 递归遍历目录，将文件名中的小写字母改为大写
  * @param {string} dirPath - 需要遍历的目录路径
  */
-function traverseAndRename(dirPath) {
+function fileNamesToUppercase(dirPath) {
     // 读取当前目录中的所有文件和子目录
     const items = fs.readdirSync(dirPath);
 
@@ -154,7 +154,7 @@ function traverseAndRename(dirPath) {
 
         if (stats.isDirectory()) {
             // 如果是目录，则递归遍历
-            traverseAndRename(itemPath);
+            fileNamesToUppercase(itemPath);
         } else if (stats.isFile()) {
             // 如果是文件，则修改文件名
             const ext = path.extname(item);
@@ -175,12 +175,11 @@ function traverseAndRename(dirPath) {
     });
 }
 
+function videoRenameAndDeleteOtherFile(targetDirectory) {
+    folderNamesToUppercase(targetDirectory)
+    videoRenameFolder(targetDirectory)
+    fileNamesToUppercase(targetDirectory)
+}
 
-// const targetDirectory = process.cwd();
-const targetDirectory = 'D:/code/req-test/video';
-// const targetDirectory = 'D:/Merge';
-// const targetDirectory = '/share/CACHEDEV3_DATA/AV/VR-AV/';
-convertFolderNamesToUppercase(targetDirectory);//目录小写改大写
-traverseFolder(targetDirectory);//重命名
-traverseAndRename(targetDirectory);//文件小写改大写
-console.log('操作完成！');
+
+module.exports = videoRenameAndDeleteOtherFile
