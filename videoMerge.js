@@ -64,7 +64,7 @@ function mergeVideos(dirPath) {
     try {
         console.log(getCurrentTimeWithLocale(), `：开始合并`);
         // 使用 FFmpeg 合并视频
-        execSync(`ffmpeg -f concat -safe 0 -i "${fileListPath}" -c copy "${outputVideoPath}"`, {stdio: 'inherit'});
+        execSync(`ffmpeg -hwaccel cuda -f concat -safe 0 -i "${fileListPath}" -c copy "${outputVideoPath}"`, {stdio: 'inherit'});
         console.log(getCurrentTimeWithLocale(), `：合并完成: ${outputVideoPath}`);
 
         // 删除原视频文件和临时文件

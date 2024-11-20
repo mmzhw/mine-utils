@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 定义视频文件的扩展名
-const VIDEO_EXTENSIONS = ['.mp4', '.mkv', '.avi', '.mov', '.flv'];
+const VIDEO_EXTENSIONS = ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.wmv'];
 
 /**
  * 判断文件是否为视频文件
