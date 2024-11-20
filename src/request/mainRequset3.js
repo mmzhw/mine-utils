@@ -1,6 +1,6 @@
 let axios = require('axios');
 let moment = require('moment');
-let { scheduleDailyTask } = require('./utils');
+let {scheduleDailyTask} = require('../utils/utils');
 const qs = require('qs');
 
 const appName3 = 'vrfav';
@@ -62,4 +62,4 @@ async function scheduleDailyTask3() {
 //     myTask3: myTask3,
 //     scheduleDailyTask3: scheduleDailyTask3,
 // };
-scheduleDailyTask3()
+module.exports = scheduleDailyTask3

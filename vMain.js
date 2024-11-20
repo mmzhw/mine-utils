@@ -1,8 +1,8 @@
-const videoRenameAndDeleteOtherFile = require('./srcVideo/vRename.js');
-const videoMerge = require('./srcVideo/vMerge.js');
-const videoResolutionName = require('./srcVideo/vResolution.js');
-const deleteEmptyFolders = require('./srcVideo/vDeleteEmpty.js');
-const videoTranscodingH265 = require('./srcVideo/vH265.js');
+const videoRenameAndDeleteOtherFile = require('./src/video/vRename.js');
+const videoMerge = require('./src/video/vMerge.js');
+const videoResolutionName = require('./src/video/vResolution.js');
+const deleteEmptyFolders = require('./src/video/vDeleteEmpty.js');
+const videoTranscodingH265 = require('./src/video/vH265.js');
 
 
 const targetDirectory = 'D:/code/req-test/static/video';

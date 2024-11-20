@@ -1,14 +1,14 @@
 let axios = require('axios');
 let fs = require('fs');
 let moment = require('moment');
-let { scheduleDailyTask } = require('./utils');
+let { scheduleDailyTask } = require('../utils/utils');
 const path = require('path');
 
 const appName1 = '阿水AI6.0';
 
 async function myTask1() {
     try {
-        let authorization = fs.readFileSync(path.resolve('cookies1'), 'utf8').toString().trim();
+        let authorization = fs.readFileSync(path.resolve('./cookies1'), 'utf8').toString().trim();
         let result = await axios({
             url: 'https://api22.xiabb.chat/chatapi/marketing/signin',
             method: 'post',
@@ -31,4 +31,5 @@ async function scheduleDailyTask1() {
 //     myTask1: myTask1,
 //     scheduleDailyTask1: scheduleDailyTask1,
 // };
-scheduleDailyTask1()
+// scheduleDailyTask1()
+module.exports = scheduleDailyTask1
