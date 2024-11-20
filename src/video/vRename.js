@@ -177,7 +177,7 @@ function fileNamesToUppercase(dirPath) {
 function videoRenameAndDeleteOtherFile(targetDirectory) {
     folderNamesToUppercase(targetDirectory)
     videoRenameFolder(targetDirectory)
-    fileNamesToUppercase(targetDirectory)
+    // fileNamesToUppercase(targetDirectory)
 }
 
 
