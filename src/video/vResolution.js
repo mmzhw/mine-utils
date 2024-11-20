@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const {videoExtensions} = require('./CONSTANT');
+
 
 /**
  * 获取视频文件的分辨率（同步方法）
@@ -47,7 +49,7 @@ function videoResolutionName(dir) {
         } else if (stat.isFile()) {
             const ext = path.extname(file).toLowerCase();
             // 判断是否是视频文件（可以根据需要扩展文件类型）
-            if (['.mp4', '.mkv', '.avi', '.mov', '.flv'].includes(ext)) {
+            if (videoExtensions.includes(ext)) {
                 const resolution = getVideoResolution(filePath);
                 if (resolution) {
                     const newName = `${path.basename(file, ext)}_${resolution}${ext}`;

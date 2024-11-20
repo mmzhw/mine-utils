@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const {execSync} = require('child_process');
+const {videoExtensions} = require('./CONSTANT');
 
 // 视频文件扩展名
-const videoExtensions = ['.mp4', '.mov', '.avi', '.mkv', '.flv'];
 
 // 获取原视频的比特率
 function getOriginalBitrate(filePath) {

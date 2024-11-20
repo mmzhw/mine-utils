@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const {execSync} = require('child_process');
+const {videoExtensions} = require('./CONSTANT');
+
 
 // 获取当前时间
 function getCurrentTimeWithLocale() {
@@ -21,7 +23,6 @@ function getCurrentTimeWithLocale() {
  * @returns {boolean}
  */
 function isVideoFile(fileName) {
-    const videoExtensions = ['.mp4', '.mkv', '.avi', '.mov', '.flv', '.wmv'];
     return videoExtensions.includes(path.extname(fileName).toLowerCase());
 }
 
