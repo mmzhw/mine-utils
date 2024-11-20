@@ -5,20 +5,21 @@ const deleteEmptyFolders = require('./src/video/vDeleteEmpty.js');
 const videoTranscodingH265 = require('./src/video/vH265.js');
 
 
-const targetDirectory = 'D:/code/req-test/static/video';
+const targetDirectory = 'D:/code/mine-utils/static/video';
 // const targetDirectory = 'D:/Merge';
 // const targetDirectory = '/share/CACHEDEV3_DATA/AV/VR-AV/';
 
 
 const functionName = process.argv[2];
-if (functionName === '1'){
+console.log('开始执行', functionName, targetDirectory)
+if (functionName === '1') {
     videoRenameAndDeleteOtherFile(targetDirectory)
-} else if (functionName === '2'){
+} else if (functionName === '2') {
     videoMerge(targetDirectory)
-} else if (functionName === '3'){
+} else if (functionName === '3') {
     videoResolutionName(targetDirectory)
-} else if (functionName === '4'){
+} else if (functionName === '4') {
     deleteEmptyFolders(targetDirectory)
-} else if (functionName === '5'){
+} else if (functionName === '5') {
     videoTranscodingH265(targetDirectory)
 }
