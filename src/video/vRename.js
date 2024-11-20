@@ -10,7 +10,7 @@ const {videoExtensions} = require('./CONSTANT');
  */
 function isVideoFile(filename) {
     const ext = path.extname(filename).toLowerCase();
-    return VIDEO_EXTENSIONS.includes(ext);
+    return videoExtensions.includes(ext);
 }
 
 /**
