@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const {execSync} = require('child_process');
 const {videoExtensions} = require('./CONSTANT');
 
 
@@ -11,9 +11,8 @@ const {videoExtensions} = require('./CONSTANT');
  */
 function getVideoResolution(filePath) {
     try {
-        const cmd = `./ffmpeg-7.0.2/ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "${filePath}"`;
-        // const cmd = `ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "${filePath}"`;
-        const output = execSync(cmd, { encoding: 'utf-8' }).trim();
+        const cmd = `${process.platform === 'win32' ? 'ffprobe' : './ffmpeg-7.0.2/ffprobe'} -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0:s=x "${filePath}"`
+        const output = execSync(cmd, {encoding: 'utf-8'}).trim();
         return output || null;
     } catch (error) {
         console.error(`获取分辨率失败: ${filePath} - ${error.message}`);
