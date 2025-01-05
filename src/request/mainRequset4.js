@@ -1,5 +1,7 @@
 let axios = require('axios');
 let moment = require('moment');
+let {scheduleDailyTask} = require('../utils/utils');
+const qs = require('qs');
 const fs = require("fs");
 const path = require("path");
 
@@ -20,8 +22,12 @@ async function myTask() {
         });
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
     } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e.response.data);
     }
 }
 
-myTask()
+async function scheduleDailyTask3() {
+    scheduleDailyTask(myTask, appName, false);
+}
+
+module.exports = scheduleDailyTask3
