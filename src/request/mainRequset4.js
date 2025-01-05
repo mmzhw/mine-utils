@@ -5,7 +5,7 @@ const qs = require('qs');
 const fs = require("fs");
 const path = require("path");
 
-const appName = '52damu';
+const appName = 'www.52damu.com';
 
 async function myTask() {
     try {
