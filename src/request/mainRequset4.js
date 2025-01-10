@@ -10,7 +10,7 @@ const appName = 'www.52damu.com';
 async function myTask() {
     try {
         let formData = new FormData();
-        formData.append('nonce', 'ffe839b950');
+        formData.append('nonce', '0885a8c731');
         formData.append('action', 'zb_user_qiandao');
         let authorization = fs.readFileSync(path.resolve('./cookies4'), 'utf8').toString().trim();
 
@@ -22,7 +22,7 @@ async function myTask() {
         });
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
     } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e);
     }
 }
 
@@ -31,3 +31,4 @@ async function mainRequest() {
 }
 
 module.exports = {mainRequest,myTask}
+// myTask()

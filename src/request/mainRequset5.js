@@ -23,7 +23,7 @@ async function myTask() {
         });
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
     } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e);
     }
 }
 
@@ -31,4 +31,5 @@ async function mainRequest() {
     scheduleDailyTask(myTask, appName, false);
 }
 
-module.exports = {mainRequest,myTask}
+// module.exports = {mainRequest,myTask}
+myTask()
