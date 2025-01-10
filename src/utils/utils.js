@@ -53,6 +53,6 @@ function scheduleDailyTask(myTask, appName, isNextDay) {
 
 // 导出 greet 函数
 module.exports = {
-    calculateNextExecutionTime: calculateNextExecutionTime,
-    scheduleDailyTask: scheduleDailyTask,
+    calculateNextExecutionTime,
+    scheduleDailyTask,
 };

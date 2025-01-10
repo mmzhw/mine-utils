@@ -4,9 +4,9 @@ let moment = require('moment');
 let { scheduleDailyTask } = require('../utils/utils');
 const path = require('path');
 
-const appName1 = '阿水AI6.0';
+const appName = '阿水AI6.0';
 
-async function myTask1() {
+async function myTask() {
     try {
         let authorization = fs.readFileSync(path.resolve('./cookies1'), 'utf8').toString().trim();
         let result = await axios({
@@ -17,19 +17,14 @@ async function myTask1() {
             },
             data: {},
         });
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName1, '请求结果', result.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果', result.data);
     } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName1, '请求异常', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常', e.response.data);
     }
 }
 
-async function scheduleDailyTask1() {
-    scheduleDailyTask(myTask1, appName1, false);
+async function mainRequest() {
+    scheduleDailyTask(myTask, appName, false);
 }
 
-// module.exports = {
-//     myTask1: myTask1,
-//     scheduleDailyTask1: scheduleDailyTask1,
-// };
-// scheduleDailyTask1()
-module.exports = scheduleDailyTask1
+module.exports = {mainRequest,myTask}

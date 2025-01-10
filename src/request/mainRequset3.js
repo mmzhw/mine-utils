@@ -3,9 +3,9 @@ let moment = require('moment');
 let {scheduleDailyTask} = require('../utils/utils');
 const qs = require('qs');
 
-const appName3 = 'vrfav';
+const appName = 'vrfav';
 
-async function myTask3() {
+async function myTask() {
     try {
         let result = await axios({
             method: 'post',
@@ -20,13 +20,13 @@ async function myTask3() {
                 'Authorization': 'www.vrfav.com',
             },
         });
-        await myTask3_extra(result);
+        await myTask_extra(result);
     } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName3, '请求异常-登录', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-登录', e.response.data);
     }
 }
 
-async function myTask3_extra(data) {
+async function myTask_extra(data) {
     try {
         const cookies = data.headers['set-cookie'];
         let reqCookies = '';
@@ -48,18 +48,14 @@ async function myTask3_extra(data) {
                 'cookie': reqCookies,
             },
         });
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName3, '请求结果-签到', result.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
     } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName3, '请求异常-签到', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e.response.data);
     }
 }
 
-async function scheduleDailyTask3() {
-    scheduleDailyTask(myTask3, appName3, false);
+async function mainRequest() {
+    scheduleDailyTask(myTask, appName, false);
 }
 
-// module.exports = {
-//     myTask3: myTask3,
-//     scheduleDailyTask3: scheduleDailyTask3,
-// };
-module.exports = scheduleDailyTask3
+module.exports = {mainRequest,myTask}

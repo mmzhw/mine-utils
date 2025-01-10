@@ -27,8 +27,8 @@ async function myTask() {
     }
 }
 
-async function scheduleDailyTask3() {
+async function mainRequest() {
     scheduleDailyTask(myTask, appName, false);
 }
 
-module.exports = scheduleDailyTask3
+module.exports = {mainRequest,myTask}
