@@ -31,5 +31,5 @@ async function mainRequest() {
     scheduleDailyTask(myTask, appName, false);
 }
 
-// module.exports = {mainRequest,myTask}
-myTask()
+module.exports = {mainRequest,myTask}
+// myTask()
