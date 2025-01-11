@@ -8,7 +8,7 @@ const appName = '阿水AI6.0';
 
 async function myTask() {
     try {
-        let authorization = fs.readFileSync(path.resolve('./cookies1'), 'utf8').toString().trim();
+        let authorization = fs.readFileSync(path.resolve(__dirname, './cookies1'), 'utf8').toString().trim();
         let result = await axios({
             url: 'https://api22.xiabb.chat/chatapi/marketing/signin',
             method: 'post',

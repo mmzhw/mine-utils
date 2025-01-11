@@ -9,7 +9,7 @@ const appName = 'www.52damu.com';
 
 async function myTask() {
     try {
-        let authorization = fs.readFileSync(path.resolve('./cookies4'), 'utf8').toString().trim();
+        let authorization = fs.readFileSync(path.resolve(__dirname, './cookies4'), 'utf8').toString().trim();
         let response = await axios.get('https://www.52damu.com/user/', {
             headers: {
                 'Cookie': authorization,
