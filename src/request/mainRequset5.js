@@ -21,7 +21,7 @@ async function myTask() {
                 'authorization': 'Bearer ' + authorization,
             },
         });
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data?.data || result.data);
     } catch (e) {
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e);
     }
