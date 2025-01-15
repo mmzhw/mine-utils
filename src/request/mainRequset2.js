@@ -16,8 +16,8 @@ async function myTask() {
             },
         });
         await myTask_extra(response);
-    } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-登录', e.response.data);
+    } catch (error) {
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-登录', error.message);
 
     }
 }

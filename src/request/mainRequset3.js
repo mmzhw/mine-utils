@@ -49,8 +49,8 @@ async function myTask_extra(data) {
             },
         });
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
-    } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e.response.data);
+    } catch (error) {
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', error.message);
     }
 }
 

@@ -18,8 +18,8 @@ async function myTask() {
             data: {},
         });
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果', result.data);
-    } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常', e.response.data);
+    } catch (error) {
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常', error.message);
     }
 }
 

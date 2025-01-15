@@ -22,8 +22,8 @@ async function myTask() {
             },
         });
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data?.data || result.data);
-    } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e);
+    } catch (error) {
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', error.message);
     }
 }
 
