@@ -10,7 +10,7 @@ async function myTask() {
     try {
         let authorization = fs.readFileSync(path.resolve(__dirname, './cookies1'), 'utf8').toString().trim();
         let result = await axios({
-            url: 'https://api22.xiabb.chat/chatapi/marketing/signin',
+            url: 'https://api-10086.rcouyi.com/chatapi/marketing/signin',
             method: 'post',
             headers: {
                 'Authorization': 'Bearer ' + authorization,
