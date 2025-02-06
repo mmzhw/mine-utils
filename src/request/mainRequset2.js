@@ -15,34 +15,25 @@ async function myTask() {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        await myTask_extra(response);
-    } catch (error) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-登录', error.message);
-
-    }
-}
-
-async function myTask_extra(data) {
-    try {
-        let cookies = data.headers['set-cookie'];
+        let cookies = response.headers['set-cookie'];
         cookies = [
             cookies[1].replace('path=/wp-content/plugins; HttpOnly', ''),
             cookies[0].replace('path=/', ''),
             'cao_notice_cookie=1;',
             cookies[3].replace('path=/; HttpOnly', ''),
         ];
-        let cookiesSstr = cookies.join('');
-        let formData = new FormData();
-        formData.append('action', 'user_qiandao');
-        let result = await axios.post('https://520vr.cn/wp-admin/admin-ajax.php', formData, {
+        let cookiesStr = cookies.join('');
+        let formData2 = new FormData();
+        formData2.append('action', 'user_qiandao');
+        let result = await axios.post('https://520vr.cn/wp-admin/admin-ajax.php', formData2, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Cookie': cookiesSstr,
+                'Cookie': cookiesStr,
             },
         });
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', result.data);
-    } catch (e) {
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-签到', e.response.data);
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', String(result.data?.data || result.data));
+    } catch (error) {
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-登录', error.message);
 
     }
 }
