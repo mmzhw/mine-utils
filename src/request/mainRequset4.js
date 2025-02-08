@@ -22,7 +22,7 @@ async function myTask() {
 
         if (match && match[1]) {
             nonce = match[1];
-            console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '找到 ajax_nonce 的值：', nonce);
+            // console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '找到 ajax_nonce 的值：', nonce);
         } else {
             console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '未找到 ajax_nonce 的值');
             return
