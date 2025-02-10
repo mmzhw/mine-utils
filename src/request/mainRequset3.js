@@ -40,7 +40,7 @@ async function myTask() {
                 'cookie': reqCookies,
             },
         });
-        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', String(result.data?.data || result.data));
+        console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求结果-签到', JSON.stringify(result.data?.data || result.data));
     } catch (e) {
         console.log(moment().format('YYYY-MM-DD HH:mm:ss'), appName, '请求异常-登录', e.response.data);
     }
