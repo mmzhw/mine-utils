@@ -5,7 +5,7 @@ const qs = require('qs');
 const fs = require("fs");
 const path = require("path");
 
-const appName = 'www.caijihao.com';
+const appName = 'www.caijihao.xyz';
 
 async function myTask() {
     try {
@@ -14,7 +14,7 @@ async function myTask() {
         // formData.append('action', 'zb_user_qiandao');
         let authorization = fs.readFileSync(path.resolve(__dirname, './cookies5'), 'utf8').toString().trim();
 
-        let result = await axios.post('https://www.caijihao.com/wp-json/b2/v1/userMission', {}, {
+        let result = await axios.post('https://www.caijihao.xyz/wp-json/b2/v1/userMission', {}, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Cookie': authorization,
